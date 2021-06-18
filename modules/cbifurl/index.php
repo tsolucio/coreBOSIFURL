@@ -18,10 +18,20 @@
  *  Author       : JPL TSolucio, S. L.   Joe Bordes
  *  Example      : http://your_server/your_corebos/index.php?action=index&module=cbifurl&load=http%3A%2F%2Fserver%2Ffile.php%3Funame=$users-user_name$%26uid=$users-id$
  ********************************************************************************/
-
+use Firebase\JWT\JWT;
 global $currentModule,$current_user;
 $ifpage = vtlib_purify($_REQUEST['load']);
-$ifpage = getMergedDescription($ifpage,$current_user->id,'Users');
+if (!empty($_REQUEST['embedtype']) && vtlib_purify($_REQUEST['embedtype']) == 'metabase' && GlobalVariable::getVariable('Metabase_Embed_Secret', '') !='') {
+	$payload = array(
+		"resource"=>array('dashboard'=>GlobalVariable::getVariable('Metabase_Embed_Dashbord', '')),
+		"params" => (object)array(),
+		"exp" => round(time() + (10 * 60))
+	);
+	$token = JWT::encode($payload, GlobalVariable::getVariable('Metabase_Embed_Secret', ''));
+	$ifpage=getVariable('Metabase_Embed_SiteUrl', '')."/embed/dashboard/".$token;
+}else{
+	$ifpage = getMergedDescription($ifpage,$current_user->id,'Users');
+}
 if (!empty($ifpage)) {
 	echo '<iframe width="100%" height="600" src="'.$ifpage.'"></iframe>';
 }
