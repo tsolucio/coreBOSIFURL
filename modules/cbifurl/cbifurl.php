@@ -20,6 +20,11 @@ class cbifurl extends CRMEntity {
 	function vtlib_handler($modulename, $event_type) {
 		if($event_type == 'module.postinstall') {
 			// TODO Handle post installation actions
+			$gvmoduleInstance = Vtiger_Module::getInstance('GlobalVariable');
+			$gvfield = Vtiger_Field::getInstance('gvname', $gvmoduleInstance);
+			if ($gvfield) {
+				$gvfield->setPicklistValues(array('Metabase_Embed_Secret'));
+			}
 		} else if($event_type == 'module.disabled') {
 			// TODO Handle actions when this module is disabled.
 		} else if($event_type == 'module.enabled') {
