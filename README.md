@@ -13,6 +13,16 @@ where **$users-user_name$** and **$users-id$** will get substituted accordingly.
 
 This extension becomes very powerful in conjunction with some other extensions like the advanced menu where you can specify any link as a menu entry, on the Reportico and BIRT extensions where you can add direct links to the reports, ...
 
+**secured used urls**
+<ol>
+    <li>metabase
+        ``` http://your_server/your_corebos/index.php?module=cbifurl&action=index&load=DASHBORD_NUMBER&dashboard_url=DASHBOARD_URL&params={}```
+           **dashboard_url**,**params** should be encoded
+
+    </li>
+<ol>
+
+
 **Thank you** very much for your help and contribution.
 
 *coreBOS Team*

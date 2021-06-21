@@ -22,22 +22,19 @@ use Firebase\JWT\JWT;
 
 global $currentModule,$current_user;
 
-$embedtype = '';
-if (!empty($_REQUEST['params'])) {
-	$params = json_decode($_REQUEST['params'], true);
-	$embedtype = empty($params['embedtype']) ? '' : vtlib_purify($params['embedtype']);
-}
+$embedtype = empty($_REQUEST['embedtype']) ? '' : vtlib_purify($_REQUEST['embedtype']);
 $Metabase_Embed_Secret = GlobalVariable::getVariable('Metabase_Embed_Secret', '');
 
 if (!empty($embedtype) && $embedtype== 'metabase' && $Metabase_Embed_Secret) {
+	$params = empty($_REQUEST['params']) ? array(): json_decode($_REQUEST['params'], true);
 	$payload = array(
-		"resource"=>array('dashboard'=>vtlib_purify($_REQUEST['load'])),
-		"params" => (object)array(),
+		"resource"=>array('dashboard' => intval(vtlib_purify($_REQUEST['load']))),
+		"params" => (object)$params,
 		"exp" => round(time() + (10 * 60))
 	);
 
 	$token = JWT::encode($payload, $Metabase_Embed_Secret);
-	$ifpage=$params['dashboard-url']."/embed/dashboard/".$token;
+	$ifpage=$_REQUEST['dashboard_url']."/embed/dashboard/".$token;
 } else {
 	$ifpage = vtlib_purify($_REQUEST['load']);
 }
