@@ -26,7 +26,7 @@ $embedtype = empty($_REQUEST['embedtype']) ? '' : vtlib_purify($_REQUEST['embedt
 $Metabase_Embed_Secret = GlobalVariable::getVariable('Metabase_Embed_Secret', '');
 
 if (!empty($embedtype) && $embedtype== 'metabase' && $Metabase_Embed_Secret) {
-	$params = empty($_REQUEST['params']) ? array(): json_decode($_REQUEST['params'], true);
+	$params = empty($_REQUEST['params']) ? array(): json_decode(getMergedDescription($_REQUEST['params'], $current_user->id, 'Users'), true);
 	$payload = array(
 		"resource"=>array('dashboard' => intval(vtlib_purify($_REQUEST['load']))),
 		"params" => (object)$params,
