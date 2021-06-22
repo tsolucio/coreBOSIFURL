@@ -15,10 +15,11 @@ This extension becomes very powerful in conjunction with some other extensions l
 
 **secured used urls**
 <ol>
-    <li>metabase
-        ``` http://your_server/your_corebos/index.php?module=cbifurl&action=index&load=DASHBORD_NUMBER&embedtype=IFRAMEFROM&dashboard_url=DASHBOARD_URL&params={}```
-           **dashboard_url**,**params** should be encoded
-    </li>
+<li>metabase
+
+``` http://your_server/your_corebos/index.php?module=cbifurl&action=index&load=DASHBORD_NUMBER&embedtype=metabase&dashboard_url=DASHBOARD_URL&params={} ```
+        **dashboard_url**,**params** should be encoded
+</li>
 <ol>
 
 
