@@ -18,10 +18,27 @@
  *  Author       : JPL TSolucio, S. L.   Joe Bordes
  *  Example      : http://your_server/your_corebos/index.php?action=index&module=cbifurl&load=http%3A%2F%2Fserver%2Ffile.php%3Funame=$users-user_name$%26uid=$users-id$
  ********************************************************************************/
+use Firebase\JWT\JWT;
 
 global $currentModule,$current_user;
-$ifpage = vtlib_purify($_REQUEST['load']);
-$ifpage = getMergedDescription($ifpage,$current_user->id,'Users');
+
+$embedtype = empty($_REQUEST['embedtype']) ? '' : vtlib_purify($_REQUEST['embedtype']);
+$Metabase_Embed_Secret = GlobalVariable::getVariable('Metabase_Embed_Secret', '');
+
+if (!empty($embedtype) && $embedtype== 'metabase' && $Metabase_Embed_Secret) {
+	$params = empty($_REQUEST['params']) ? array(): json_decode(getMergedDescription($_REQUEST['params'], $current_user->id, 'Users'), true);
+	$payload = array(
+		"resource"=>array('dashboard' => intval(vtlib_purify($_REQUEST['load']))),
+		"params" => (object)$params,
+		"exp" => round(time() + (10 * 60))
+	);
+
+	$token = JWT::encode($payload, $Metabase_Embed_Secret);
+	$ifpage=$_REQUEST['dashboard_url']."/embed/dashboard/".$token;
+} else {
+	$ifpage = getMergedDescription(vtlib_purify($_REQUEST['load']), $current_user->id, 'Users');
+}
+
 if (!empty($ifpage)) {
 	echo '<iframe width="100%" height="600" src="'.$ifpage.'"></iframe>';
 }
