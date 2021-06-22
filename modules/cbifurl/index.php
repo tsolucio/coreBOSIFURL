@@ -36,10 +36,8 @@ if (!empty($embedtype) && $embedtype== 'metabase' && $Metabase_Embed_Secret) {
 	$token = JWT::encode($payload, $Metabase_Embed_Secret);
 	$ifpage=$_REQUEST['dashboard_url']."/embed/dashboard/".$token;
 } else {
-	$ifpage = vtlib_purify($_REQUEST['load']);
+	$ifpage = getMergedDescription(vtlib_purify($_REQUEST['load']), $current_user->id, 'Users');
 }
-
-$ifpage = getMergedDescription($ifpage, $current_user->id, 'Users');
 
 if (!empty($ifpage)) {
 	echo '<iframe width="100%" height="600" src="'.$ifpage.'"></iframe>';
