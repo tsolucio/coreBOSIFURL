@@ -20,7 +20,7 @@ This extension becomes very powerful in conjunction with some other extensions l
 ``` http://your_server/your_corebos/index.php?module=cbifurl&action=index&load=DASHBORD_NUMBER&embedtype=metabase&dashboard_url=DASHBOARD_URL&params={} ```
         **dashboard_url**,**params** should be encoded
 </li>
-<ol>
+</ol>
 
 
 **Thank you** very much for your help and contribution.
