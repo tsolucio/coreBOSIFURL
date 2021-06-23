@@ -17,7 +17,7 @@ This extension becomes very powerful in conjunction with some other extensions l
 <ol>
 <li>metabase
 
-``` http://your_server/your_corebos/index.php?module=cbifurl&action=index&load=DASHBORD_NUMBER&embedtype=metabase&dashboard_url=DASHBOARD_URL&params={} ```
+``` http://your_server/your_corebos/index.php?module=cbifurl&action=index&load=DASHBORD_NUMBER&embedtype=metabase&dashboard_url=DASHBOARD_URL&params={}&theme='night'```
         **dashboard_url**,**params** should be encoded
 </li>
 </ol>
